@@ -9,7 +9,6 @@ public class Product {
 	String description;
 	
 	public Product(String title, BigDecimal unitPrice, int kcalPer100g, String description) {
-		super();
 		this.title = title;
 		this.unitPrice = unitPrice;
 		this.kcalPer100g = kcalPer100g;

@@ -5,6 +5,7 @@ import static org.junit.Assert.*;
 import java.io.File;
 import java.io.IOException;
 import java.math.BigDecimal;
+import java.util.List;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -90,8 +91,8 @@ public class PageScraperTest {
 	public void getBerryEnergyTest() {
 		assertEquals(33, testClass.getBerryEnergy(strawberryPage));
 		assertEquals(52, testClass.getBerryEnergy(cherryPunnetPage));
-		assertEquals(-1, testClass.getBerryEnergy(blackcurrantPage));
-		assertEquals(-1, testClass.getBerryEnergy(cherryStrawPage));
+		assertEquals(null, testClass.getBerryEnergy(blackcurrantPage));
+		assertEquals(null, testClass.getBerryEnergy(cherryStrawPage));
 		assertEquals(45, testClass.getBerryEnergy(blueberryPage));
 
 	}
@@ -115,6 +116,16 @@ public class PageScraperTest {
 		assertEquals(berry1.getUnitPrice(), testClass.getBerryInfoFromPage(blueberryPage).getUnitPrice());
 		assertEquals(berry1.getKcalPer100g(), testClass.getBerryInfoFromPage(blueberryPage).getKcalPer100g());
 		assertEquals(berry1.getDescription(), testClass.getBerryInfoFromPage(blueberryPage).getDescription());
+	}
+	
+	
+	@Test
+	public void getAllProductsTest() {
+		List<Product> berriesFromPage = testClass.getAllProducts(homePageAsDoc);
+		
+		assertEquals(17, berriesFromPage.size());
+		assertEquals("Sainsbury's Raspberries, Taste the Difference 150g", berriesFromPage.get(6).getTitle());
+		assertEquals(null, berriesFromPage.get(12).getKcalPer100g());
 	}
 
 }

@@ -102,6 +102,20 @@ public class PageScraper {
 			return kcal;
 		}
 	}
+	
+	
+	public List<Product> getAllProducts(Document doc) {
+		List<String> berryLinks = getBerryLinks(doc);
+		List<Product> berries = new ArrayList<Product>();
+		
+		for (int i = 0; i < berryLinks.size(); i++) {
+			Document temp = getHtmlPage(berryLinks.get(i));
+			Product berry = getBerryInfoFromPage(temp);
+			berries.add(berry);	
+		}
+		
+		return berries;
+	}
 
 	
 }
