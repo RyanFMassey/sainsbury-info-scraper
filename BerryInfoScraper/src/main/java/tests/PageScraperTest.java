@@ -11,6 +11,7 @@ import org.jsoup.nodes.Document;
 import org.junit.Before;
 import org.junit.Test;
 
+import models.Product;
 import utils.PageScraper;
 
 
@@ -55,6 +56,17 @@ public class PageScraperTest {
 				testClass.getBerryLinks(homePageAsDoc).get(10));
 	}
 	
+	
+	@Test
+	public void getBerryTitleTest() {
+		assertEquals("Sainsbury's Strawberries 400g", testClass.getBerryTitle(strawberryPage));
+		assertEquals("Sainsbury's Cherry Punnet 200g", testClass.getBerryTitle(cherryPunnetPage));
+		assertEquals("Sainsbury's Blackcurrants 150g", testClass.getBerryTitle(blackcurrantPage));
+		assertEquals("Sainsbury's British Cherry & Strawberry Pack 600g", testClass.getBerryTitle(cherryStrawPage));
+		assertEquals("Sainsbury's Blueberries 400g", testClass.getBerryTitle(blueberryPage));
+	}
+	
+	
 	@Test
 	public void getBerryDescriptionTest() {
 		assertEquals("by Sainsbury's strawberries", testClass.getBerryDescription(strawberryPage));
@@ -71,6 +83,38 @@ public class PageScraperTest {
 		assertEquals(new BigDecimal("1.75"), testClass.getUnitPrice(blackcurrantPage));
 		assertEquals(new BigDecimal("4.00"), testClass.getUnitPrice(cherryStrawPage));
 		assertEquals(new BigDecimal("3.25"), testClass.getUnitPrice(blueberryPage));
+	}
+	
+	
+	@Test 
+	public void getBerryEnergyTest() {
+		assertEquals(33, testClass.getBerryEnergy(strawberryPage));
+		assertEquals(52, testClass.getBerryEnergy(cherryPunnetPage));
+		assertEquals(-1, testClass.getBerryEnergy(blackcurrantPage));
+		assertEquals(-1, testClass.getBerryEnergy(cherryStrawPage));
+		assertEquals(45, testClass.getBerryEnergy(blueberryPage));
+
+	}
+	
+	@Test
+	public void getBerryInfoTest() {
+		Product berry1 = new Product("Sainsbury's Strawberries 400g", new BigDecimal(1.75), 33, "by Sainsbury's strawberries");
+		assertEquals(berry1.getTitle(), testClass.getBerryInfoFromPage(strawberryPage).getTitle());
+		assertEquals(berry1.getUnitPrice(), testClass.getBerryInfoFromPage(strawberryPage).getUnitPrice());
+		assertEquals(berry1.getKcalPer100g(), testClass.getBerryInfoFromPage(strawberryPage).getKcalPer100g());
+		assertEquals(berry1.getDescription(), testClass.getBerryInfoFromPage(strawberryPage).getDescription());
+		
+		berry1 = new Product("Sainsbury's Blackcurrants 150g", new BigDecimal(1.75), -1, "Union Flag");
+		assertEquals(berry1.getTitle(), testClass.getBerryInfoFromPage(blackcurrantPage).getTitle());
+		assertEquals(berry1.getUnitPrice(), testClass.getBerryInfoFromPage(blackcurrantPage).getUnitPrice());
+		assertEquals(berry1.getKcalPer100g(), testClass.getBerryInfoFromPage(blackcurrantPage).getKcalPer100g());
+		assertEquals(berry1.getDescription(), testClass.getBerryInfoFromPage(blackcurrantPage).getDescription());
+		
+		berry1 = new Product("Sainsbury's Blueberries 400g", new BigDecimal(3.25), 45, "by Sainsbury's blueberries");
+		assertEquals(berry1.getTitle(), testClass.getBerryInfoFromPage(blueberryPage).getTitle());
+		assertEquals(berry1.getUnitPrice(), testClass.getBerryInfoFromPage(blueberryPage).getUnitPrice());
+		assertEquals(berry1.getKcalPer100g(), testClass.getBerryInfoFromPage(blueberryPage).getKcalPer100g());
+		assertEquals(berry1.getDescription(), testClass.getBerryInfoFromPage(blueberryPage).getDescription());
 	}
 
 }

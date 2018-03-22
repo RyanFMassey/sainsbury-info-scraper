@@ -40,13 +40,20 @@ public class PageScraper {
 	
 	
 	public Product getBerryInfoFromPage(Document doc) {
-		String desc = getBerryDescription(doc);
+		String title = getBerryTitle(doc);
 		BigDecimal price = getUnitPrice(doc);
+		int kcalEnergy = getBerryEnergy(doc);
+		String desc = getBerryDescription(doc);
 		
-		
-		Product berry = null;
+		Product berry = new Product(title, price, kcalEnergy, desc);
 		return berry;
-		
+	}
+	
+	
+	public String getBerryTitle(Document doc) {
+		Element titleDiv = doc.select("div.productTitleDescriptionContainer").first();
+		String title = titleDiv.select("h1").first().text();
+		return title;
 	}
 	
 	
@@ -60,7 +67,6 @@ public class PageScraper {
 		} while (desc.equals(null) || desc.equals("") || i > info.childNodeSize());
 		
 		return desc;
-		
 	}
 	
 	
@@ -71,5 +77,31 @@ public class PageScraper {
 		return unitPrice;
 	}
 	
+	
+	public int getBerryEnergy(Document doc) {
+		Elements nutritionTable = doc.select("table.nutritionTable");
+		
+		if (nutritionTable.isEmpty()) {
+			return -1;
+		} else {
+			Elements rows = nutritionTable.select("tr");
+			Element kcalRow = rows.get(2);
+			String kcalData = kcalRow.select("td").get(0).text();
+			
+			//Manual Version
+			/*if (kcalData.contains("kcal")) {
+				kcalData = kcalData.substring(0, kcalData.length()-4);
+				return Integer.parseInt(kcalData);
+			} else {
+				return Integer.parseInt(kcalData);
+			}*/
+			
+			//Regex version
+			int kcal = Integer.parseInt(kcalData.replaceAll("\\D+",  ""));
+			
+			return kcal;
+		}
+	}
+
 	
 }
