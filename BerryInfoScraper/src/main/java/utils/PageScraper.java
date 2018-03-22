@@ -38,6 +38,26 @@ public class PageScraper {
 	}
 	
 	
+	public Product getBerryInfoFromPage(Document doc) {
+		Product berry;
+		getBerryDescription(doc);
+		return null;
+		
+	}
+	
+	
+	public String getBerryDescription(Document doc) {
+		Element info = doc.select("div#information").first();
+		String desc = null;
+		int i = 0;
+		do {
+			desc = info.select("p").get(i).text();
+			i++;
+		} while (desc.equals(null) || desc.equals("") || i > info.childNodeSize());
+		
+		return desc;
+		
+	}
 	
 	
 }

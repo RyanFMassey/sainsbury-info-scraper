@@ -10,6 +10,8 @@ public class Controller {
 		PageScraper ps = new PageScraper();
 		Document doc = ps.getHtmlPage("https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/webapp/wcs/stores/servlet/gb/groceries/berries-cherries-currants6039.html");
 		ps.getBerryLinks(doc);
+		doc = ps.getHtmlPage("https://jsainsburyplc.github.io/serverside-test/site/www.sainsburys.co.uk/shop/gb/groceries/berries-cherries-currants/sainsburys-british-strawberries-400g.html");
+		ps.getBerryInfoFromPage(doc);
 	}
 	
 }
