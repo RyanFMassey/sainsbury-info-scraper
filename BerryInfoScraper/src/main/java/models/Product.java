@@ -8,6 +8,14 @@ public class Product {
 	int kcalPer100g;
 	String description;
 	
+	public Product(String title, BigDecimal unitPrice, int kcalPer100g, String description) {
+		super();
+		this.title = title;
+		this.unitPrice = unitPrice;
+		this.kcalPer100g = kcalPer100g;
+		this.description = description;
+	}
+
 	public String getTitle() {
 		return title;
 	}

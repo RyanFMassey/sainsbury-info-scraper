@@ -1,5 +1,6 @@
 package utils;
 
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -39,9 +40,12 @@ public class PageScraper {
 	
 	
 	public Product getBerryInfoFromPage(Document doc) {
-		Product berry;
-		getBerryDescription(doc);
-		return null;
+		String desc = getBerryDescription(doc);
+		BigDecimal price = getUnitPrice(doc);
+		
+		
+		Product berry = null;
+		return berry;
 		
 	}
 	
@@ -57,6 +61,14 @@ public class PageScraper {
 		
 		return desc;
 		
+	}
+	
+	
+	public BigDecimal getUnitPrice(Document doc) {
+		String stringPrice = doc.select("p.pricePerUnit").first().text();
+		stringPrice = stringPrice.substring(1, stringPrice.length() - 5);
+		BigDecimal unitPrice = new BigDecimal(stringPrice);
+		return unitPrice;
 	}
 	
 	
