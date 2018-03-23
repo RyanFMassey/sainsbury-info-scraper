@@ -15,10 +15,10 @@ import models.Product;
 public class PageScraper {
 	
 	public Document getHtmlPage(String url) {
-		Connection conn = Jsoup.connect(url);
+		Connection conn = Jsoup.connect(url);    //Open connection to specified url
 		Document doc = null;
 		try {
-			doc = conn.timeout(6000).get();
+			doc = conn.timeout(6000).get();   //Execute get request and parse to Document
 		} catch (Exception e) {
 			
 		}
@@ -27,12 +27,12 @@ public class PageScraper {
 	
 	
 	public List<String> getBerryLinks(Document doc) {
-		Elements berryElements = doc.select("div.productInfo");
+		Elements berryElements = doc.select("div.productInfo");  //get all divs with class productInfo
 		List<String> berryLinks = new ArrayList<String>();
 		
-		for (Element berryInfo : berryElements) {
-			String link = berryInfo.getElementsByTag("a").first().attr("abs:href");
-			berryLinks.add(link);
+		for (Element berryInfo : berryElements) {  // for each element in the list
+			String link = berryInfo.getElementsByTag("a").first().attr("abs:href");		//store absolut link from elements with "a" tag
+			berryLinks.add(link);  //add string to list
 		}
 		
 		return berryLinks;
@@ -51,8 +51,8 @@ public class PageScraper {
 	
 	
 	public String getBerryTitle(Document doc) {
-		Element titleDiv = doc.select("div.productTitleDescriptionContainer").first();
-		String title = titleDiv.select("h1").first().text();
+		Element titleDiv = doc.select("div.productTitleDescriptionContainer").first();  //get the first div element with class productTitleDescriptionContainer
+		String title = titleDiv.select("h1").first().text();  //store the text of the first h1 element
 		return title;
 	}
 	

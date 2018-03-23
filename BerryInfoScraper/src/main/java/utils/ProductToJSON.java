@@ -1,6 +1,5 @@
 package utils;
 
-import java.util.List;
 
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
@@ -10,12 +9,12 @@ import models.Results;
 
 public class ProductToJSON {
 	
-	public void resultsToJSON(Results r) {
+	public String resultsToJSON(Results r) {
 		GsonBuilder gb = new GsonBuilder();
-		gb.registerTypeAdapter(Product.class, new ProductSerializer());
+		gb.registerTypeAdapter(Product.class, new ProductSerializer());	//Configures Gson for custom serialization.
 		gb.setPrettyPrinting().disableHtmlEscaping().create(); //Disable html escaping to show apostrophes rather than unicode 
-		Gson gson = gb.setPrettyPrinting().disableHtmlEscaping().create(); //Disable html escaping to show apostrophes rather than unicode 
+		Gson gson = gb.setPrettyPrinting().disableHtmlEscaping().create(); //Disable html escaping to show apostrophes rather than unicode. Enables prettyprinting, which outputs the json in a line by line format. 
 		
-		System.out.println(gson.toJson(r));
+		return gson.toJson(r);
 	}
 }
